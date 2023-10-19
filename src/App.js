@@ -8,14 +8,14 @@ function App() {
     // useState hook to update value stored
     // if input is invalid send request for default URL
 
-    const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=2381fcb06c0ff5e970f0d9f6ae95aabd&units=metric`
+    const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${process.env.REACT_APP_API_KEY}&units=metric`
 
     // const [inputValue, setInputValue] = useState("")
     const [newData, setNewData] = useState({fetchData})
 
     function fetchData(inputValue){
       if(inputValue){
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=2381fcb06c0ff5e970f0d9f6ae95aabd&units=metric`).then((response) =>{
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${process.env.REACT_APP_API_KEY}&units=metric`).then((response) =>{
           setNewData(response.data)
         }).catch((err)=>{
           if(err.response.status === 400){
