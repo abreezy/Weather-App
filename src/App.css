@@ -1,0 +1,56 @@
+/* Tailwind directives needed for TailwindCSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Container styles */
+.container {
+    @apply transition delay-100 text-center bg-gray-100 rounded-lg w-80 mx-auto p-4 shadow-md;
+  }
+  
+/* Update the CSS for text color in both light and dark modes */
+/* Input styles */
+.input {
+    @apply transition delay-100 w-full justify-center p-2 mt-2 justify-center border border-blue-500 rounded-lg text-xl;
+  }
+
+/* Input text color and background color in dark mode */
+.dark-mode .input {
+    @apply text-white bg-gray-800;
+  }
+  
+/* Input text color and background color in light mode */
+.light-mode .input {
+    @apply text-gray-800 bg-white;
+  }
+  
+/* Header styles */
+.header {
+    @apply text-3xl font-semibold my-4;
+  }
+  
+/* Subheader styles */
+.subheader {
+    @apply text-2xl my-2;
+  }
+  
+/* Weather data styles */
+.weather-data {
+    @apply text-xl my-2;
+  }
+  
+/* Image styles */
+.weather-image {
+    @apply mx-auto max-w-full my-4;
+    max-height: 200px; /* Set the maximum height for the image */
+  }
+  
+/* Light mode styles */
+.light-mode {
+    @apply bg-white text-gray-700;
+  }
+  
+/* Dark mode styles */
+.dark-mode {
+    @apply bg-gray-900 text-white;
+  }

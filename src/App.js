@@ -1,60 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Switch from 'react-switch';
+import './App.css'; // Import your app-specific CSS
+import Button from './Button';
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-    
-    // input where it takes values from user 
-    // useState hook to update value stored
-    // if input is invalid send request for default URL
+  const toggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
-    const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${process.env.REACT_APP_API_KEY}&units=metric`
+  const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+  const [newData, setNewData] = useState({});
 
-    // const [inputValue, setInputValue] = useState("")
-    const [newData, setNewData] = useState({fetchData})
+  const fetchData = (inputValue) => {
+    const apiUrl = inputValue
+      ? `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${process.env.REACT_APP_API_KEY}&units=metric`
+      : defaultUrl;
 
-    function fetchData(inputValue){
-      if(inputValue){
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${process.env.REACT_APP_API_KEY}&units=metric`).then((response) =>{
-          setNewData(response.data)
-        }).catch((err)=>{
-          if(err.response.status === 400){
-            alert("invalid city")
-          }
-        })
-      } else {
-        axios.get(defaultUrl).then((response) => {
-          setNewData(response.data)
-        })
-      }
+    axios.get(apiUrl)
+      .then((response) => {
+        setNewData(response.data);
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          alert('Invalid city');
+        }
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleInput = (e) => {
+    if (e.key === 'Enter') {
+      fetchData(e.target.value);
     }
-    useEffect(() => {
-      fetchData()
-    }, [])
-
-    function handleInput(e){
-      if (e.key === "Enter"){
-        // setInputValue(e.target.value)
-        fetchData(e.target.value)
-      }
-    }
+  };
 
   return (
-    <div>
+    <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+      <div className="flex justify-between items-center space-x-4 my-4">
+        <Button isDarkMode={isDarkMode} toggleMode={toggleMode} />
+        <Switch
+          onChange={toggleMode}
+          checked={isDarkMode}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          handleDiameter={24}
+          width={50}
+          height={24}
+          onColor="#111827"
+          offColor="#319795"
+          className="custom-switch"
+        />
+      </div>
+      <button>
+        Toggle Dark Mode
+      </button>
       <input
+        className={`input ${isDarkMode ? 'text-white bg-gray-800' : 'text-gray-800 bg-white'}`} 
         placeholder="Enter City"
         onKeyDown={handleInput}
       />
-      { newData ? <h1>{newData.name}</h1> : <h1></h1> }
-      { newData.sys ? <h2>{newData.sys.country}</h2> : <h2></h2>}
-      { newData.main ? <h1>Temp: {newData.main.temp}oC</h1> : <h1></h1> }
-      { newData.main ? <h1>Feels Like: {newData.main.feels_like}oC</h1> : <h1></h1> }
-      { newData.main ? <h1>Humidity: {newData.main.humidity}%</h1> : <h1></h1> }
-      {newData.weather ? <h2>{newData.weather[0].main}</h2> : <h2></h2>}
-      {newData.weather ? <h2>{newData.weather[0].description}</h2> : <h2></h2>}
-      { newData.weather ? <img src={`https://openweathermap.org/img/wn/${newData.weather[0].icon}@2x.png`} /> : null }
+      {newData ? <h1 className="header">{newData.name}</h1> : <h1>Unknown</h1>}
+      {newData.sys ? <h2 className="subheader">{newData.sys.country}</h2> : <h2>Unknown</h2>}
+      {newData.main ? <p className="weather-data">Temp: {newData.main.temp}°C</p> : <p>Unknown</p>}
+      {newData.main ? <p className="weather-data">Feels Like: {newData.main.feels_like}°C</p> : <p>Unknown</p>}
+      {newData.main ? <p className="weather-data">Humidity: {newData.main.humidity}%</p> : <p>Unknown</p>}
+      {newData.weather ? <h2 className="subheader">{newData.weather[0].main}</h2> : <h2>Unknown</h2>}
+      {newData.weather ? (
+        <img
+          className="weather-image"
+          src={`https://openweathermap.org/img/wn/${newData.weather[0].icon}@2x.png`}
+          alt="Weather Icon"
+        />
+      ) : null}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
