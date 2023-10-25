@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 const Button = ({ isDarkMode, toggleMode }) => {
   useEffect(() => {
-    // You can apply transition-related logic here if needed
   }, [isDarkMode]);
 
   return (

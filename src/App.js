@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Switch from 'react-switch';
-import './App.css'; // Import your app-specific CSS
+import './App.css'; 
 import Button from './Button';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false); // variable for setting/checking dark mode
+  const [savedCities, setSavedCities] = useState([]) // variable for storing saved cities
+  const maxSavedCities = 4; // Maximum number of saved cities
 
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -22,7 +24,21 @@ function App() {
     axios.get(apiUrl)
       .then((response) => {
         setNewData(response.data);
+
+        // Update the list of saved cities
+        if (!savedCities.includes(inputValue)) {
+          // Limit the saved cities to a maximum of 4
+          if (savedCities.length >= maxSavedCities) {
+            const newSavedCities = [...savedCities];
+            newSavedCities.shift(); // Remove the oldest saved city
+            newSavedCities.push(inputValue);
+            setSavedCities(newSavedCities);
+          } else {
+            setSavedCities([...savedCities, inputValue]);
+          }
+        }
       })
+
       .catch((err) => {
         if (err.response && err.response.status === 400) {
           alert('Invalid city');
@@ -39,6 +55,11 @@ function App() {
       fetchData(e.target.value);
     }
   };
+ 
+  // function to make the first letter in the cities under Recent searched capitalised
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   return (
     <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
@@ -57,7 +78,7 @@ function App() {
           className="custom-switch"
         />
       </div>
-      <button>
+      <button className="weather-data">
         Toggle Dark Mode
       </button>
       <input
@@ -78,6 +99,16 @@ function App() {
           alt="Weather Icon"
         />
       ) : null}
+      <div className="saved-cities">
+        <p className="weather-data">Recent searches</p>
+        {savedCities.map((city) => (
+        <button key={city} onClick={() => fetchData(city)}
+        className={`saved-city-button ${isDarkMode ? 'saved-city-button-dark' : 'saved-city-button-light'}`}
+        >
+          {city ? capitalizeFirstLetter(city) : ''}
+          </button>
+          ))}
+          </div>
     </div>
   );
 }

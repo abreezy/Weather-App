@@ -47,10 +47,20 @@
   
 /* Light mode styles */
 .light-mode {
-    @apply bg-white text-gray-700;
+    @apply bg-slate-100 text-gray-700;
   }
   
 /* Dark mode styles */
 .dark-mode {
     @apply bg-gray-900 text-white;
+  }
+/* Button styles */
+.saved-city-button {
+    @apply py-2 px-1 rounded-lg mb-2 transition delay-100 font-semibold justify-center;
+  }
+.saved-city-button-light {
+    @apply bg-slate-100 hover:bg-gray-200 text-black;
+  }
+.saved-city-button-dark {
+    @apply bg-gray-900 hover:bg-gray-500 text-white;
   }
