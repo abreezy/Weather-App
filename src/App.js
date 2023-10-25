@@ -10,13 +10,13 @@ function App() {
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
   };
-
-  const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+  const API_KEY = process.env.REACT_APP_API_KEY
+  const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_KEY}&units=metric`;
   const [newData, setNewData] = useState({});
 
   const fetchData = (inputValue) => {
     const apiUrl = inputValue
-      ? `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${process.env.REACT_APP_API_KEY}&units=metric`
+      ? `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${API_KEY}&units=metric`
       : defaultUrl;
 
     axios.get(apiUrl)

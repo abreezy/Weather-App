@@ -11,7 +11,7 @@
 /* Update the CSS for text color in both light and dark modes */
 /* Input styles */
 .input {
-    @apply transition delay-100 w-full justify-center p-2 mt-2 justify-center border border-blue-500 rounded-lg text-xl;
+    @apply transition delay-100 w-full p-2 mt-2 justify-center border border-blue-500 rounded-lg text-xl;
   }
 
 /* Input text color and background color in dark mode */
