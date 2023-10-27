@@ -62,53 +62,55 @@ function App() {
   }
 
   return (
-    <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-      <div className="flex justify-between items-center space-x-4 my-4">
-        <Button isDarkMode={isDarkMode} toggleMode={toggleMode} />
-        <Switch
-          onChange={toggleMode}
-          checked={isDarkMode}
-          uncheckedIcon={false}
-          checkedIcon={false}
-          handleDiameter={24}
-          width={50}
-          height={24}
-          onColor="#111827"
-          offColor="#319795"
-          className="custom-switch"
+    <div className='centered-card'>
+      <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+        <div className="flex justify-between items-center space-x-4 my-4">
+          <Button isDarkMode={isDarkMode} toggleMode={toggleMode} />
+          <Switch
+            onChange={toggleMode}
+            checked={isDarkMode}
+            uncheckedIcon={false}
+            checkedIcon={false}
+            handleDiameter={24}
+            width={50}
+            height={24}
+            onColor="#111827"
+            offColor="#319795"
+            className="custom-switch"
+          />
+        </div>
+        <button className="weather-data">
+          Toggle Dark Mode
+        </button>
+        <input
+          className={`input ${isDarkMode ? 'text-white bg-gray-800' : 'text-gray-800 bg-white'}`} 
+          placeholder="Enter City"
+          onKeyDown={handleInput}
         />
+        {newData ? <h1 className="header">{newData.name}</h1> : <h1>Unknown</h1>}
+        {newData.sys ? <h2 className="subheader">{newData.sys.country}</h2> : <h2>Unknown</h2>}
+        {newData.main ? <p className="weather-data">Temp: {newData.main.temp}°C</p> : <p>Unknown</p>}
+        {newData.main ? <p className="weather-data">Feels Like: {newData.main.feels_like}°C</p> : <p>Unknown</p>}
+        {newData.main ? <p className="weather-data">Humidity: {newData.main.humidity}%</p> : <p>Unknown</p>}
+        {newData.weather ? <h2 className="subheader">{newData.weather[0].main}</h2> : <h2>Unknown</h2>}
+        {newData.weather ? (
+          <img
+            className="weather-image"
+            src={`https://openweathermap.org/img/wn/${newData.weather[0].icon}@2x.png`}
+            alt="Weather Icon"
+          />
+        ) : null}
+        <div className="saved-cities">
+          <p className="weather-data">Recent searches</p>
+          {savedCities.map((city) => (
+          <button key={city} onClick={() => fetchData(city)}
+          className={`saved-city-button ${isDarkMode ? 'saved-city-button-dark' : 'saved-city-button-light'}`}
+          >
+            {city ? capitalizeFirstLetter(city) : ''}
+            </button>
+            ))}
+            </div>
       </div>
-      <button className="weather-data">
-        Toggle Dark Mode
-      </button>
-      <input
-        className={`input ${isDarkMode ? 'text-white bg-gray-800' : 'text-gray-800 bg-white'}`} 
-        placeholder="Enter City"
-        onKeyDown={handleInput}
-      />
-      {newData ? <h1 className="header">{newData.name}</h1> : <h1>Unknown</h1>}
-      {newData.sys ? <h2 className="subheader">{newData.sys.country}</h2> : <h2>Unknown</h2>}
-      {newData.main ? <p className="weather-data">Temp: {newData.main.temp}°C</p> : <p>Unknown</p>}
-      {newData.main ? <p className="weather-data">Feels Like: {newData.main.feels_like}°C</p> : <p>Unknown</p>}
-      {newData.main ? <p className="weather-data">Humidity: {newData.main.humidity}%</p> : <p>Unknown</p>}
-      {newData.weather ? <h2 className="subheader">{newData.weather[0].main}</h2> : <h2>Unknown</h2>}
-      {newData.weather ? (
-        <img
-          className="weather-image"
-          src={`https://openweathermap.org/img/wn/${newData.weather[0].icon}@2x.png`}
-          alt="Weather Icon"
-        />
-      ) : null}
-      <div className="saved-cities">
-        <p className="weather-data">Recent searches</p>
-        {savedCities.map((city) => (
-        <button key={city} onClick={() => fetchData(city)}
-        className={`saved-city-button ${isDarkMode ? 'saved-city-button-dark' : 'saved-city-button-light'}`}
-        >
-          {city ? capitalizeFirstLetter(city) : ''}
-          </button>
-          ))}
-          </div>
     </div>
   );
 }
