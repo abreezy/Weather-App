@@ -13,6 +13,7 @@ function App() {
     setDarkMode(!isDarkMode);
   };
 
+  // Retrieving the API key and pulling data from the API. London set as default city
   const API_KEY = process.env.REACT_APP_API_KEY
   const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_KEY}&units=metric`;
   const [newData, setNewData] = useState({});
@@ -21,7 +22,7 @@ function App() {
     const apiUrl = inputValue
       ? `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${API_KEY}&units=metric`
       : defaultUrl;
-
+    // axios used to handle HTTP requests from the browser 
     axios.get(apiUrl)
       .then((response) => {
         setNewData(response.data);
@@ -57,9 +58,12 @@ function App() {
     }
   };
  
-  // function to make the first letter in the cities under Recent searched capitalised
+  // Function to capitalize the first word and not show punctuation in the recent searches
   function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    // Split the string at the first punctuation mark and capitalize the first part
+    const parts = string.split(/[.,;!?]/);
+    const firstPart = parts[0].trim(); // Get the first part and remove leading/trailing spaces
+    return firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
   }
 
   return (
