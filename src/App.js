@@ -55,6 +55,7 @@ function App() {
   const handleInput = (e) => {
     if (e.key === 'Enter') {
       fetchData(e.target.value);
+      e.target.value = ''; // Clear the input field after Enter is pressed
     }
   };
  
