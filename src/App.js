@@ -5,13 +5,14 @@ import './App.css';
 import Button from './Button';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false); // variable for setting/checking dark mode
+  const [isDarkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true'); // variable for setting checking dark mode and using last saved preference
   const [savedCities, setSavedCities] = useState([]) // variable for storing saved cities
   const maxSavedCities = 4; // Maximum number of saved cities
-
+  // function to toggle dark mode 
   const toggleMode = () => {
-    setIsDarkMode(!isDarkMode);
+    setDarkMode(!isDarkMode);
   };
+
   const API_KEY = process.env.REACT_APP_API_KEY
   const defaultUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_KEY}&units=metric`;
   const [newData, setNewData] = useState({});
@@ -62,26 +63,27 @@ function App() {
   }
 
   return (
-    <div className='centered-card'>
+    // classname centered-card is used to center the entire card on the middle of the page
+    <div className={`centered-card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}> 
       <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
         <div className="flex justify-between items-center space-x-4 my-4">
-          <Button isDarkMode={isDarkMode} toggleMode={toggleMode} />
+        <Button isDarkMode={isDarkMode} toggleMode={toggleMode} />
           <Switch
-            onChange={toggleMode}
-            checked={isDarkMode}
-            uncheckedIcon={false}
-            checkedIcon={false}
-            handleDiameter={24}
-            width={50}
-            height={24}
-            onColor="#111827"
-            offColor="#319795"
-            className="custom-switch"
-          />
+              onChange={toggleMode}
+              checked={isDarkMode}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              handleDiameter={24}
+              width={50}
+              height={24}
+              onColor="#111827"
+              offColor="#747e91"
+              className={`custom-switch ${isDarkMode ? 'dark-mode' : 'light-mode'}`}
+            />
         </div>
-        <button className="weather-data">
+        <h1 className="weather-data">
           Toggle Dark Mode
-        </button>
+        </h1>
         <input
           className={`input ${isDarkMode ? 'text-white bg-gray-800' : 'text-gray-800 bg-white'}`} 
           placeholder="Enter City"

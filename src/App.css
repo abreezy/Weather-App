@@ -5,16 +5,12 @@
 
   /* Card styles */
   .centered-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-    height: 100vh; /* Set the height to 100% of the viewport height to center vertically */
+    @apply transition delay-100 flex justify-center items-center h-screen
   }
 
   /* Container styles */
   .container {
-      @apply transition delay-100 text-center bg-gray-100 rounded-lg w-80 mx-auto p-4 shadow-md;
+      @apply transition delay-100 text-center rounded-lg w-80 mx-auto p-4 shadow-md;
     }
     
   /* Update the CSS for text color in both light and dark modes */
@@ -42,7 +38,7 @@
   .subheader {
       @apply text-2xl my-2;
     }
-    
+
   /* Weather data styles */
   .weather-data {
       @apply text-xl my-2;
@@ -56,20 +52,20 @@
     
   /* Light mode styles */
   .light-mode {
-      @apply bg-slate-100 text-gray-700;
+      @apply bg-zinc-50 text-gray-700;
     }
     
   /* Dark mode styles */
   .dark-mode {
       @apply bg-gray-900 text-white;
     }
-  /* Button styles */
+  /* Recent searched button styles */
   .saved-city-button {
       @apply py-2 px-1 rounded-lg mb-2 transition delay-100 font-semibold justify-center;
     }
   .saved-city-button-light {
-      @apply bg-slate-100 hover:bg-gray-200 text-black;
+      @apply bg-zinc-50 hover:bg-gray-200 text-black;
     }
   .saved-city-button-dark {
-      @apply bg-gray-900 hover:bg-gray-500 text-white;
+      @apply bg-gray-900 hover:bg-gray-800 text-white;
     }
