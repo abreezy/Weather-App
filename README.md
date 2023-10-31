@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This App is deployed at https://weather-app-eight-blue.vercel.app/ 
 
 ## Available Scripts
 
